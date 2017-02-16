@@ -4,6 +4,8 @@ import java.awt.*;
  * Created by hiltjar000 on 2/7/2017.
  */
 public abstract class Entity {
+    
+    //This was made via Internets
 
     private Game game;
     private Color color;
