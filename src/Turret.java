@@ -3,12 +3,13 @@ import java.awt.*;
 /**
  * Created by szabomar000 on 2/15/2017.
  */
-public class Turret {
+public class Turret extends Entity{
     private int x, y, width, height;
     private Game game;
 
 
     public Turret(int x ,int y, int width, int height, Game game){
+        super(Color.RED, x, y, width, height, 0,0, game);
         this.x = x;
         this.y = y;
         this.width = width;
