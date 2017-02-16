@@ -8,8 +8,8 @@ public class Circle extends Entity{
 
     public Circle(Color color, int x, int y, int diameter, double minSpeed, double maxSpeed, Game game){
         super(color, x, y, diameter, diameter, minSpeed, maxSpeed, game);
+        createSpeed();
 
-        //RANDOM SPEED AND ANGLE
 
 
     }

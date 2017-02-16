@@ -30,13 +30,6 @@ public abstract class Entity {
         shieldHealth = 20;
 
 
-        if (getDx() < 1 || getDy() < 1) {
-            angle = 2 * Math.PI * Math.random();
-            speed = minSpeed + maxSpeed * Math.random();
-            setDx(Math.cos(angle) * speed);
-            setDy(Math.sin(angle) * speed);
-        }
-
     }
 
      //GENERIC MOVE METHOD
@@ -247,6 +240,14 @@ public abstract class Entity {
         else{
             setDy(0);
         }
+    }
+
+    public void createSpeed(){
+        angle = 2 * Math.PI * Math.random();
+        speed = minSpeed + maxSpeed * Math.random();
+        setDx(Math.cos(angle) * speed);
+        setDy(Math.sin(angle) * speed);
+
     }
 }
 

@@ -7,7 +7,7 @@ public class Food extends Entity{
 
     public Food(Color color, int x, int y, int width, int height, int minSpeed, int maxSpeed, Game game){
         super(color, x, y, width, height, minSpeed, maxSpeed, game);
-
+        createSpeed();
     }
 
     public void paint(Graphics g) {
