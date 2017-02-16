@@ -11,7 +11,7 @@ public class Game extends JPanel implements ActionListener{
 
     Timer timer;
     private int positionX, positionY;
-    int level = 2;
+    int level = 0;
 
     ArrayList<Entity> entities;
     ArrayList<Turret> turrets;

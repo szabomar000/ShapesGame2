@@ -19,11 +19,13 @@ public class Turret extends Entity{
 
         g.setColor(Color.darkGray);
         g.fillOval(getX()+getWidth()/4, getY()+getHeight()/4, getWidth()/2, getHeight()/2);
+        g.fillRect(getX()+getWidth()/2, getY()+5*getHeight()/12, getWidth()/2, getHeight()/4);
+
     }
 
     public static Turret makeTurret( Game game){
         Point point = game.randomPosition();
-        return new Turret((int) point.getX(),(int) point.getY(), 20, 20, game);
+        return new Turret((int) point.getX(),(int) point.getY(), 30, 30, game);
     }
 
 
