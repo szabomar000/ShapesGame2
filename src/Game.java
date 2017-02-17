@@ -11,10 +11,9 @@ public class Game extends JPanel implements ActionListener{
 
     Timer timer;
     private int positionX, positionY, playerDiameter;
-    int level = 0;
+    int level = 1;
 
     ArrayList<Entity> entities;
-    ArrayList<Turret> turrets;
 
     public Game(){
         //SETS UP JFRAME
@@ -88,7 +87,6 @@ public class Game extends JPanel implements ActionListener{
         playerDiameter = 30;
         entities = new ArrayList<Entity>();
         entities.add(new Player(Color.MAGENTA, getWidth()/2, getHeight()/2, playerDiameter,this));
-        turrets = new ArrayList<Turret>();
 
         levels();
 
@@ -102,19 +100,21 @@ public class Game extends JPanel implements ActionListener{
             entities.add(Food.normalFood(getHeight(), getWidth(), this));
 
         }
-        turrets.add(Turret.makeTurret(this));
+
+
         //4 FAT CIRCLE
         if (level == 1) {
             for (int i = 0; i < 4; i++) {
-                entities.add(Circle.fatCircle(getHeight(), getWidth(), this));
+                entities.add(Circle.fatCircle(this));
             }
         }
         //5 FAT CIRCLE
         if (level == 2){
-            entities.add(Circle.fatCircle(getHeight(), getWidth(), this));
+            entities.add(Circle.fatCircle(this));
             entities.add(Triangle.tracking(getWidth(), getHeight(), entities.get(0), this));
-            for (int i = 0; i < 3; i++) {
-                entities.add(Circle.fastCircle(getHeight(), getWidth(), this));
+            entities.add(Turret.makeTurret(this));
+            for (int i = 0; i < 2; i++) {
+                entities.add(Circle.fastCircle(this));
             }
         }
     }
@@ -184,10 +184,6 @@ public class Game extends JPanel implements ActionListener{
         for( Entity obj : entities){
             obj.paint(g);
         }
-        for (Turret obj : turrets){
-            obj.paint(g);
-        }
-
     }
     public static void main(String[] args){
         Game game = new Game();

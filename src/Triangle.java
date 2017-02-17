@@ -23,15 +23,15 @@ public class Triangle extends Entity {
 
         int xPoints[] = {getX()+getWidth()/2, getX(), getX()+getWidth()};
         int yPoints[] = {getY(), getY()+getWidth(), getY()+getWidth()};
-        int npoints = 3;
+        int nPoints = 3;
 
-        g.fillPolygon(xPoints, yPoints, npoints);
+        g.fillPolygon(xPoints, yPoints, nPoints);
 
 
     }
 
 
-
+    //TRACKING ENEMY
     public static Triangle tracking(int base, int height, Entity player, Game game){
         Point point = game.randomPosition();
         return new Triangle(Color.yellow, (int) point.getX(),(int) point.getY(), 20, 30, 1.25, 1.75, player, game);

@@ -53,6 +53,8 @@ public abstract class Entity {
         y+=dy;
 
     }
+
+    //"SLOWING" OVER TIME 
     public void addSpeed(double dx, double dy){
         if(this.dx+dx < maxSpeed){
             this.dx += dx;
@@ -81,11 +83,8 @@ public abstract class Entity {
         angle = Math.tan(dy/dx);
     }
 
-    public void bounce(){
-        yBounce();
-        xBounce();
-    }
 
+    //PLAYER'S MOVE METHOD
     public void playerMove(){
         dx = Math.abs(pastX-game.getPositionX());
         dy = Math.abs(pastY-game.getPositionY());
@@ -219,6 +218,7 @@ public abstract class Entity {
         return angle;
     }
 
+    //USE FOR TRACKING ENEMIES
     public void track(Entity player){
 
         if (player.getX() > getX()){
@@ -242,6 +242,7 @@ public abstract class Entity {
         }
     }
 
+    //CREATES A RANDOM SPEED AND ANGLE
     public void createSpeed(){
         angle = 2 * Math.PI * Math.random();
         speed = minSpeed + maxSpeed * Math.random();
