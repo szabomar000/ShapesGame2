@@ -10,7 +10,8 @@ public abstract class Entity {
     private Game game;
     private Color color;
     private int x, y, width, height, pastX, pastY;
-    private double dx, dy, minSpeed, maxSpeed, speed, angle;
+    private double minSpeed, maxSpeed, angle;
+    private Point speed;
     int shieldHealth;
     int health;
 
@@ -34,60 +35,55 @@ public abstract class Entity {
 
      //GENERIC MOVE METHOD
     public void move(){
-        double nextLeft = x + dx;
-        double nextRight = x + width + dx;
-        double nextTop = y + dy;
-        double nextBottom = y + height + dy;
+        double nextLeft = x + speed.getX();
+        double nextRight = x + width + speed.getX();
+        double nextTop = y + speed.getY();
+        double nextBottom = y + height + speed.getY();
 
         if(nextTop <=0 || nextBottom > game.getHeight()) {
-            //SLOWS AFTER EVERY BOUNCE
-            dy -= dy/25;
             yBounce();
         }
         if (nextLeft <= 0 || nextRight > game.getWidth()) {
-            //SLOWS AFTER EVERY BOUNCE
-            dx -= dx/25;
             xBounce();
         }
-        x+=dx;
-        y+=dy;
+        x+=speed.getX();
+        y+=speed.getY();
 
     }
 
     //"SLOWING" OVER TIME 
-    public void addSpeed(double dx, double dy){
-        if(this.dx+dx < maxSpeed){
-            this.dx += dx;
+    public void addSpeed(Point speed){
+        if(this.speed.getX()+speed.getX() < maxSpeed){
+            this.speed.x += speed.getX();
         }
-        if(this.dy+dy < maxSpeed) {
-            this.dy += dy;
+        if(this.speed.getY()+speed.getY() < maxSpeed) {
+            this.speed.y += speed.getY();
         }
 
     }
 
     public void yBounce(){
         //SLOWS SPEED OVER TIME
-        if (dy > minSpeed){
-            dy -= dy/16;} dy*=-1;
+        if (speed.getY() > minSpeed){
+            speed.y -= speed.getY()/16;} speed.y*=-1;
         updateVector();
     }
     public void xBounce(){
         //SLOWS SPEED OVER TIME
-        if (dx > minSpeed){
-            dx -= dx/16;} dx*=-1;
+        if (speed.getX() > minSpeed){
+            speed.x -= speed.getX()/16;} speed.x*=-1;
         updateVector();
     }
 
     private void updateVector(){
-        speed = Math.pow(dx*dx + dy*dy, 1/2);
-        angle = Math.tan(dy/dx);
+        angle = Math.tan(speed.getY()/speed.getX());
     }
 
 
     //PLAYER'S MOVE METHOD
     public void playerMove(){
-        dx = Math.abs(pastX-game.getPositionX());
-        dy = Math.abs(pastY-game.getPositionY());
+        speed.x = Math.abs(pastX-game.getPositionX());
+        speed.y = Math.abs(pastY-game.getPositionY());
         setX(game.getPositionX());
         setY(game.getPositionY());
         pastX = game.getPositionX();
@@ -170,20 +166,13 @@ public abstract class Entity {
         this.height = height;
     }
 
-    public double getDx() {
-        return dx;
+
+    public void setDx(int dx) {
+        speed.x = dx;
     }
 
-    public void setDx(double dx) {
-        this.dx = dx;
-    }
-
-    public double getDy() {
-        return dy;
-    }
-
-    public void setDy(double dy) {
-        this.dy = dy;
+    public void setDy(int dy) {
+        speed.y = dy;
     }
 
     public int getShieldHealth() {
@@ -210,7 +199,7 @@ public abstract class Entity {
         return maxSpeed;
     }
 
-    public double getSpeed() {
+    public Point getSpeed() {
         return speed;
     }
 
@@ -220,35 +209,18 @@ public abstract class Entity {
 
     //USE FOR TRACKING ENEMIES
     public void track(Entity player){
-
-        if (player.getX() > getX()){
-            setDx(getSpeed());
-        }
-        else if (player.getX() < getX()){
-            setDx(getSpeed()*-1);
-        }
-        else{
-            setDx(0);
-        }
-
-        if (player.getY() > getY()){
-            setDy(getSpeed());
-        }
-        else if(player.getY() < getY()){
-            setDy(getSpeed()*-1);
-        }
-        else{
-            setDy(0);
-        }
+        //NEED TO REDO
     }
 
     //CREATES A RANDOM SPEED AND ANGLE
     public void createSpeed(){
         angle = 2 * Math.PI * Math.random();
-        speed = minSpeed + maxSpeed * Math.random();
-        setDx(Math.cos(angle) * speed);
+        spd = minSpeed + Math.random()*(maxSpeed-minSpeed);
+
+        setDx(Math.cos(angle) );
         setDy(Math.sin(angle) * speed);
 
     }
+
 }
 

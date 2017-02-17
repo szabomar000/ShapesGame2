@@ -55,8 +55,6 @@ public class Turret extends Entity implements ActionListener{
         angle = Math.atan2((double)cY, (double)cX);
     }
 
-
-
     public void actionPerformed(ActionEvent e) {
         System.out.println("I FIRE TORPEDO");
     }
