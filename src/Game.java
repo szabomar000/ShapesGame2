@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Game extends JPanel implements ActionListener{
 
     Timer timer;
-    private int positionX, positionY;
+    private int positionX, positionY, playerDiameter;
     int level = 0;
 
     ArrayList<Entity> entities;
@@ -85,8 +85,9 @@ public class Game extends JPanel implements ActionListener{
 
     public void init(){
         //CONTROLLER LIST
+        playerDiameter = 30;
         entities = new ArrayList<Entity>();
-        entities.add(new Player(Color.MAGENTA, getWidth()/2, getHeight()/2, 30,this));
+        entities.add(new Player(Color.MAGENTA, getWidth()/2, getHeight()/2, playerDiameter,this));
         turrets = new ArrayList<Turret>();
 
         levels();
@@ -221,5 +222,9 @@ public class Game extends JPanel implements ActionListener{
 
     public Point randomPosition(){
         return new Point( (int) (25 + (getWidth() - 50) * Math.random()),(int) (25 + (getHeight() - 50) * Math.random()));
+    }
+
+    public int getPlayerDiameter() {
+        return playerDiameter;
     }
 }

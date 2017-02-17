@@ -34,11 +34,11 @@ public class Turret extends Entity{
     }
 
     public void updateAngle(){
-        int posX = getGame().getPositionX();
-        int posY = getGame().getPositionY();
+        int cX = (getGame().getPositionX()+getGame().getPlayerDiameter()/2)-(getX()+getWidth()/2);
+        int cY = (getGame().getPositionY()+getGame().getPlayerDiameter()/2)-(getY()+getHeight()/2);
 
-        double slope =(double)(posY - getY())/(double)(posX - getX());
-        angle = Math.atan(slope);
+
+        angle = Math.atan2((double)cY, (double)cX);
     }
 
 
