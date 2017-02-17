@@ -14,9 +14,6 @@ public abstract class Entity {
     int shieldHealth;
     int health;
 
-
-
-
     public Entity(Color color, int x, int y, int width, int height, double minSpeed, double maxSpeed, Game game) {
         this.game = game;
         this.color = color;

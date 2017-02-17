@@ -21,7 +21,7 @@ public class Player extends Circle{
         g.setColor(Color.getHSBColor(hue, 1, 1));
         g.fillRect(10,10, health, 20);
 
-        //SHIELD AROUND HEALTHBAR
+        //SHIELD AROUND HEALTH BAR
         g.setColor(Color.BLUE);
         for (int i = 0; i < shieldHealth/4; i++){
             g.drawRect(10-(i+1), 10-(i+1), health+2*(i+1),20+2*(i+1) );
@@ -33,10 +33,9 @@ public class Player extends Circle{
         //VISUAL SHIELD AROUND THE PLAYER
 
         g.setColor(Color.CYAN);
-        for (double i = 0; i < shieldHealth/4; i++){
+        for(double i = 0; i < shieldHealth/4; i++){
             g.drawOval(getX()+(int)i, getY()+(int)i, d-2*(int)i, d-2*(int)i);
         }
-        //BOOM
 
     }
 

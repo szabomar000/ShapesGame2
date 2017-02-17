@@ -11,7 +11,7 @@ public class Game extends JPanel implements ActionListener{
 
     Timer timer;
     private int positionX, positionY, playerDiameter;
-    int level = 1;
+    int level = 2;
 
     ArrayList<Entity> entities;
 
@@ -76,7 +76,6 @@ public class Game extends JPanel implements ActionListener{
             level++;
             count = 0;
             levels();
-
         }
         repaint();
     }
@@ -87,7 +86,6 @@ public class Game extends JPanel implements ActionListener{
         playerDiameter = 30;
         entities = new ArrayList<Entity>();
         entities.add(new Player(Color.MAGENTA, getWidth()/2, getHeight()/2, playerDiameter,this));
-
         levels();
 
     }
@@ -113,6 +111,7 @@ public class Game extends JPanel implements ActionListener{
             entities.add(Circle.fatCircle(this));
             entities.add(Triangle.tracking(getWidth(), getHeight(), entities.get(0), this));
             entities.add(Turret.makeTurret(this));
+            entities.add(Torpedo.torp(this));
             for (int i = 0; i < 2; i++) {
                 entities.add(Circle.fastCircle(this));
             }

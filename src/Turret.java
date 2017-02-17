@@ -19,8 +19,6 @@ public class Turret extends Entity implements ActionListener{
         reload.start();
 
     }
-
-
     public void paint(Graphics g){
 
         //PAINTS THE BASE
@@ -42,15 +40,14 @@ public class Turret extends Entity implements ActionListener{
 
     }
 
-    public static Turret makeTurret( Game game){
+    public static Turret makeTurret(Game game){
         Point point = game.randomPosition();
-        return new Turret((int) point.getX(),(int) point.getY(), 30, 30, 7, game);
+        return new Turret((int) point.getX(),(int) point.getY(), 30, 30, 5, game);
     }
 
     public void updateAngle(){
         int cX = (getGame().getPositionX()+getGame().getPlayerDiameter()/2)-(getX()+getWidth()/2);
         int cY = (getGame().getPositionY()+getGame().getPlayerDiameter()/2)-(getY()+getHeight()/2);
-
 
         angle = Math.atan2((double)cY, (double)cX);
     }
@@ -58,6 +55,7 @@ public class Turret extends Entity implements ActionListener{
 
 
     public void actionPerformed(ActionEvent e) {
+        Torpedo.torp(getGame());
         System.out.println("I FIRE TORPEDO");
     }
 }
