@@ -24,7 +24,7 @@ public class Circle extends Entity{
     //THE FAT ENEMY
     public static Circle fatCircle(Game game){
         Point point = game.randomPosition();
-        return new Circle(Color.RED, (int) point.getX(),(int) point.getY(), 50, 1.75,3, game);
+        return new Circle(Color.orange, (int) point.getX(),(int) point.getY(), 50, 1.75,3, game);
     }
 
     //THE FAST ENEMY
