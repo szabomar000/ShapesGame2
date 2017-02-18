@@ -1,3 +1,5 @@
+import javafx.geometry.Point3D;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -111,7 +113,6 @@ public class Game extends JPanel implements ActionListener{
             entities.add(Circle.fatCircle(this));
             entities.add(Triangle.tracking(getWidth(), getHeight(), entities.get(0), this));
             entities.add(Turret.makeTurret(this));
-            entities.add(Torpedo.torp(this));
             for (int i = 0; i < 2; i++) {
                 entities.add(Circle.fastCircle(this));
             }
@@ -140,21 +141,21 @@ public class Game extends JPanel implements ActionListener{
                         else if (other instanceof Circle || other instanceof Triangle){
                             //if the player hits behind or opposite to the enemy's direction of motion
                             if (other instanceof Circle){
-                                if (player.getX() > other.getX() && other.getDx() < 0 || player.getX() < other.getX() && other.getDx() > 0) {
+                                if (player.getX() > other.getX() && other.getSpeed().getX() < 0 || player.getX() < other.getX() && other.getSpeed().getX() > 0) {
                                     //GAINS A FOURTH OF PLAYERS SPEED
-                                    other.addSpeed(player.getDx() / 4.0, 0);
+                                    other.addSpeed(new Point3D(player.getSpeed().getX()/4, 0, 0));
                                 } else {
                                     //LOSES A FOURTH OF ITS SPEED
-                                    other.addSpeed(player.getDx() / -4.0, 0);
+                                    other.addSpeed(new Point3D(player.getSpeed().getX()/-4, 0, 0));
                                     other.xBounce();
                                 }
 
-                                if (player.getY() > other.getY() + other.getHeight() / 2 && other.getDy() < 0 || player.getY() < other.getY() && other.getDy() > 0) {
+                                if (player.getY() > other.getY() + other.getHeight() / 2 && other.getSpeed().getY() < 0 || player.getY() < other.getY() && other.getSpeed().getY() > 0) {
                                     //GAINS A FOURTH OF PLAYERS SPEED
-                                    other.addSpeed(0, player.getDy() / 4.0);
+                                    other.addSpeed(new Point3D(0, player.getSpeed().getY()/4,0));
                                 } else {
                                     //LOSES A FOURTH OF ITS SPEED
-                                    other.addSpeed(0, player.getDy() / -4.0);
+                                    other.addSpeed(new Point3D(0, player.getSpeed().getY()/-4, 0));
                                     other.yBounce();
                                 }
                             }

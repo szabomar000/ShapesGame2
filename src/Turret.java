@@ -34,7 +34,6 @@ public class Turret extends Entity implements ActionListener{
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.rotate(angle, getX()+getWidth()/2, getY()+getHeight()/2);
         g2d.fillRect(getX()+getWidth()/2, getY()+5*getHeight()/12, getWidth()/2, getHeight()/4);
-        updateAngle();
         //GETS RID OF THE NEW GRAPHICS OBJECT
         g2d.dispose();
 
@@ -53,7 +52,7 @@ public class Turret extends Entity implements ActionListener{
     }
 
     public void actionPerformed(ActionEvent e) {
-        Torpedo.torp(getGame());
+        //Torpedo.torp(getGame());
         System.out.println("I FIRE TORPEDO");
     }
 }

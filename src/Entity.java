@@ -1,3 +1,5 @@
+import javafx.geometry.Point3D;
+
 import java.awt.*;
 
 /**
@@ -10,8 +12,8 @@ public abstract class Entity {
     private Game game;
     private Color color;
     private int x, y, width, height, pastX, pastY;
-    private double minSpeed, maxSpeed, angle;
-    private Point speed;
+    private double minSpeed, maxSpeed, angle, actualSpeed;
+    private Point3D speed;
     int shieldHealth;
     int health;
 
@@ -24,8 +26,11 @@ public abstract class Entity {
         this.height = height;
         this.minSpeed = minSpeed;
         this.maxSpeed = maxSpeed;
+        speed = new Point3D(0,0, 0);
+        actualSpeed = 0;
         health = 100;
         shieldHealth = 20;
+
 
 
     }
@@ -49,12 +54,12 @@ public abstract class Entity {
     }
 
     //"SLOWING" OVER TIME 
-    public void addSpeed(Point speed){
+    public void addSpeed(Point3D speed){
         if(this.speed.getX()+speed.getX() < maxSpeed){
-            this.speed.x += speed.getX();
+            this.speed.add(speed.getX(),0,0);
         }
         if(this.speed.getY()+speed.getY() < maxSpeed) {
-            this.speed.y += speed.getY();
+            this.speed.add(0, speed.getY(),0);
         }
 
     }
@@ -62,13 +67,15 @@ public abstract class Entity {
     public void yBounce(){
         //SLOWS SPEED OVER TIME
         if (speed.getY() > minSpeed){
-            speed.y -= speed.getY()/16;} speed.y*=-1;
+            speed.subtract(0, speed.getY()/16, 0);}
+            speed=new Point3D(speed.getX(), speed.getY()*-1, speed.getZ());
         updateVector();
     }
     public void xBounce(){
         //SLOWS SPEED OVER TIME
         if (speed.getX() > minSpeed){
-            speed.x -= speed.getX()/16;} speed.x*=-1;
+            speed.subtract(speed.getX()/16, 0, 0);}
+            speed = new Point3D(speed.getX()*-1, speed.getY(), speed.getZ());
         updateVector();
     }
 
@@ -79,8 +86,7 @@ public abstract class Entity {
 
     //PLAYER'S MOVE METHOD
     public void playerMove(){
-        speed.x = Math.abs(pastX-game.getPositionX());
-        speed.y = Math.abs(pastY-game.getPositionY());
+        speed = new Point3D(Math.abs(pastX-game.getPositionX()), Math.abs(pastY-game.getPositionY()), 0);
         setX(game.getPositionX());
         setY(game.getPositionY());
         pastX = game.getPositionX();
@@ -165,11 +171,11 @@ public abstract class Entity {
 
 
     public void setDx(int dx) {
-        speed.x = dx;
+        speed = new Point3D(dx, speed.getY(), 0);
     }
 
     public void setDy(int dy) {
-        speed.y = dy;
+        speed = new Point3D(speed.getX(), dy, 0);
     }
 
     public int getShieldHealth() {
@@ -196,7 +202,7 @@ public abstract class Entity {
         return maxSpeed;
     }
 
-    public Point getSpeed() {
+    public Point3D getSpeed() {
         return speed;
     }
 
@@ -204,20 +210,39 @@ public abstract class Entity {
         return angle;
     }
 
+
+
     //USE FOR TRACKING ENEMIES
     public void track(Entity player){
-        //NEED TO REDO
+        angle = Math.atan2((player.getY()-player.getWidth()/2)-y, (player.getX()-player.getWidth()/2)-x);
+        double x = actualSpeed*Math.cos(angle);
+        double y = actualSpeed*Math.sin(angle);
+        speed = new Point3D(x, y, getHypotenuse(x, y));
+        System.out.println("Speed: " + x + " " + y);
+        System.out.println("Vector Speed: " + actualSpeed);
+        System.out.println("Angle: " + angle/Math.PI*180);
+        System.out.println("sin: " + Math.sin(angle));
+
+    }
+
+    public double getHypotenuse(double x, double y){
+        return Math.pow(Math.pow(x, 2) + Math.pow(y, 2),1/2);
     }
 
     //CREATES A RANDOM SPEED AND ANGLE
     public void createSpeed(){
         angle = 2 * Math.PI * Math.random();
-        spd = minSpeed + Math.random()*(maxSpeed-minSpeed);
+        actualSpeed = minSpeed + Math.random()*(maxSpeed-minSpeed);
 
-        setDx(Math.cos(angle) );
-        setDy(Math.sin(angle) * speed);
+        double x = Math.cos(angle) * actualSpeed;
+        double y = Math.sin(angle) * actualSpeed;
+        setSpeed(new Point3D(x, y, speed.getZ()));
+
 
     }
 
+    public void setSpeed(Point3D speed) {
+        this.speed = speed;
+    }
 }
 
