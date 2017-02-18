@@ -214,14 +214,11 @@ public abstract class Entity {
 
     //USE FOR TRACKING ENEMIES
     public void track(Entity player){
-        angle = Math.atan2((player.getY()-player.getWidth()/2)-y, (player.getX()-player.getWidth()/2)-x);
+        angle = Math.atan2((player.getY()+player.getHeight()/2)-y, (player.getX()+player.getWidth()/2)-x);
         double x = actualSpeed*Math.cos(angle);
         double y = actualSpeed*Math.sin(angle);
-        speed = new Point3D(x, y, getHypotenuse(x, y));
-        System.out.println("Speed: " + x + " " + y);
-        System.out.println("Vector Speed: " + actualSpeed);
-        System.out.println("Angle: " + angle/Math.PI*180);
-        System.out.println("sin: " + Math.sin(angle));
+        speed = new Point3D(Math.round(x), Math.round(y), getHypotenuse(x, y));
+
 
     }
 

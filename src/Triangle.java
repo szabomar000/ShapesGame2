@@ -34,6 +34,6 @@ public class Triangle extends Entity {
     //TRACKING ENEMY
     public static Triangle tracking(int base, int height, Entity player, Game game){
         Point point = game.randomPosition();
-        return new Triangle(Color.yellow, (int) point.getX(),(int) point.getY(), 20, 30, 1, 2, player, game);
+        return new Triangle(Color.yellow, (int) point.getX(),(int) point.getY(), 20, 30, 1.5, 2.5, player, game);
     }
 }
