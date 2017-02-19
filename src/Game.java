@@ -13,7 +13,7 @@ public class Game extends JPanel implements ActionListener{
 
     Timer timer;
     private int positionX, positionY, playerDiameter;
-    int level = 2;
+    int level = 0;
 
     ArrayList<Entity> entities;
 
@@ -104,7 +104,7 @@ public class Game extends JPanel implements ActionListener{
 
         //4 FAT CIRCLE
         if (level == 1) {
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 3; i++) {
                 entities.add(Circle.fatCircle(this));
             }
         }

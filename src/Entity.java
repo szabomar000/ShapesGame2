@@ -14,7 +14,7 @@ public abstract class Entity {
     private int x, y, width, height, pastX, pastY;
     private double minSpeed, maxSpeed, angle, actualSpeed;
     private Point3D speed;
-    int shieldHealth;
+    double shieldHealth;
     int health;
 
     public Entity(Color color, int x, int y, int width, int height, double minSpeed, double maxSpeed, Game game) {
@@ -106,7 +106,17 @@ public abstract class Entity {
     }
 
     public void gainHealth(){
-        health+=5;
+        if (health+4 > 125){
+            health = 125;
+        }
+        else{health+=4;}
+    }
+
+    public void gainHealth(int dh){
+        if (health+dh > 125){
+            health = 125;
+        }
+        else{health+=dh;}
     }
 
     public void loseHealth() {
@@ -178,9 +188,7 @@ public abstract class Entity {
         speed = new Point3D(speed.getX(), dy, 0);
     }
 
-    public int getShieldHealth() {
-        return shieldHealth;
-    }
+    public double getShieldHealth() {return shieldHealth;}
 
     public void setShieldHealth(int shieldHealth) {
         this.shieldHealth = shieldHealth;

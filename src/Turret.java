@@ -37,6 +37,8 @@ public class Turret extends Entity implements ActionListener{
         //GETS RID OF THE NEW GRAPHICS OBJECT
         g2d.dispose();
 
+        updateAngle();
+
     }
 
     public static Turret makeTurret(Game game){

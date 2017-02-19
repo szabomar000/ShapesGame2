@@ -30,6 +30,6 @@ public class Circle extends Entity{
     //THE FAST ENEMY
     public static Circle fastCircle(Game game){
         Point point = game.randomPosition();
-        return new Circle(Color.blue, (int) point.getX(),(int) point.getY(), 15,  3, 6, game);
+        return new Circle(Color.blue, (int) point.getX(),(int) point.getY(), 25,  3, 6, game);
     }
 }
