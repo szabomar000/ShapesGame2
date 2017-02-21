@@ -29,7 +29,6 @@ public class Torpedo extends Entity {
 
     @Override
     public void move(){
-        //BOO!
         setX(getX()+(int)getSpeed().getX());
         setY(getY()+(int)getSpeed().getY());
     }
