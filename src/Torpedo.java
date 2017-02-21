@@ -27,6 +27,12 @@ public class Torpedo extends Entity {
         return new Torpedo(Color.red, x, y, 10, 5, 3, angle, game);
     }
 
+    @Override
+    public void move(){
+        setX(getX()+(int)getSpeed().getX());
+        setY(getY()+(int)getSpeed().getY());
+    }
+
 
 
 
