@@ -128,6 +128,15 @@ public abstract class Entity {
             game.lose();
         }
     }
+    public void loseHealth(int dh) {
+        if (shieldHealth-dh > 0) {
+            shieldHealth-=dh;
+        } else if (health-dh > 0) {
+            health-=dh;
+        } else {
+            game.lose();
+        }
+    }
 
     public abstract void paint(Graphics g);
 

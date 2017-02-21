@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  * Created by szabomar000 on 2/15/2017.
@@ -9,6 +10,7 @@ import java.awt.event.ActionListener;
 public class Turret extends Entity implements ActionListener{
 
     double angle;
+    ArrayList<Torpedo> torps;
     Timer reload;
 
     public Turret(int x ,int y, int width, int height, double time, Game game){
@@ -16,11 +18,11 @@ public class Turret extends Entity implements ActionListener{
         time *= 1000;
         reload = new Timer((int)time, this);
         angle = 0;
+        torps = new ArrayList<Torpedo>();
         reload.start();
 
     }
     public void paint(Graphics g){
-
         //PAINTS THE BASE
         g.setColor(Color.red);
         g.fillRect(getX(), getY(), getWidth(), getHeight());
@@ -56,5 +58,7 @@ public class Turret extends Entity implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         //Torpedo.torp(getGame());
         System.out.println("I FIRE TORPEDO");
+        getGame().getEntities().add(Torpedo.torp(getX()+getWidth()/2, getY()+getHeight()/2, angle, getGame()));
     }
+
 }

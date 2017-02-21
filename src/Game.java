@@ -100,7 +100,7 @@ public class Game extends JPanel implements ActionListener{
             entities.add(Food.normalFood(getHeight(), getWidth(), this));
 
         }
-
+        entities.add(Turret.makeTurret(this));
 
         //4 FAT CIRCLE
         if (level == 1) {
@@ -112,7 +112,7 @@ public class Game extends JPanel implements ActionListener{
         if (level == 2){
             entities.add(Circle.fatCircle(this));
             entities.add(Triangle.tracking(getWidth(), getHeight(), entities.get(0), this));
-            entities.add(Turret.makeTurret(this));
+
             for (int i = 0; i < 2; i++) {
                 entities.add(Circle.fastCircle(this));
             }
@@ -160,6 +160,13 @@ public class Game extends JPanel implements ActionListener{
                                 }
                             }
                             player.loseHealth();
+                        }
+                        else if(other instanceof Torpedo){
+                            if (player.getShieldHealth() < 5){
+                                player.loseHealth(15);
+                            }
+                            entities.remove(j);
+                            j--;
                         }
                     }
                 }
@@ -222,5 +229,9 @@ public class Game extends JPanel implements ActionListener{
 
     public int getPlayerDiameter() {
         return playerDiameter;
+    }
+
+    public ArrayList<Entity> getEntities() {
+        return entities;
     }
 }
