@@ -69,6 +69,14 @@ public class Game extends JPanel implements ActionListener{
             if (entities.get(i) instanceof Triangle){
                 entities.get(i).track(entities.get(0));
             }
+            if(entities.get(i)instanceof Torpedo){
+                System.out.println(entities.get(i));
+                if(entities.get(i).checkOutBound()){
+                    entities.remove(i);
+                    i--;
+                }
+
+            }
             entities.get(i).move();
         }
         if (!foodleft){
@@ -100,7 +108,7 @@ public class Game extends JPanel implements ActionListener{
             entities.add(Food.normalFood(getHeight(), getWidth(), this));
 
         }
-        entities.add(Turret.makeTurret(this));
+
 
         //4 FAT CIRCLE
         if (level == 1) {
@@ -117,62 +125,60 @@ public class Game extends JPanel implements ActionListener{
                 entities.add(Circle.fastCircle(this));
             }
         }
+        if (level == 3){
+            entities.add(Turret.makeTurret(this));
+        }
     }
 
     public void collision(){
+        Entity player = entities.get(0);
 
-        for (int i = 0; i < entities.size(); i++){
-            for (int j = 1; j < entities.size(); j++){
-
-                //PLAYER COLLISIONS
-                if (i == 0){
-                    Entity player = entities.get(0);
-                    Entity other = entities.get(j);
-                    if (player.collides(other)){
-                        //FOOD
-                        if(other instanceof Food){
-                            //adding health
-                            if (player.getHealth() < 125) {
-                                player.gainHealth();
-                            }
-                            entities.remove(j);
+        //PLAYER COLLISIONS
+        for (int i = 1; i < entities.size(); i++){
+            Entity other = entities.get(i);
+            if (player.collides(other)){
+                //FOOD
+                if(other instanceof Food){
+                    //adding health
+                    if (player.getHealth() < 125) {
+                        player.gainHealth();
+                    }
+                    entities.remove(i);
+                }
+                //COLLISIONS WITH ENEMIES
+                else if (other instanceof Circle || other instanceof Triangle){
+                    //if the player hits behind or opposite to the enemy's direction of motion
+                    if (other instanceof Circle){
+                        if (player.getX() > other.getX() && other.getSpeed().getX() < 0 || player.getX() < other.getX() && other.getSpeed().getX() > 0) {
+                            //GAINS A FOURTH OF PLAYERS SPEED
+                            other.addSpeed(new Point3D(player.getSpeed().getX()/4, 0, 0));
+                        } else {
+                            //LOSES A FOURTH OF ITS SPEED
+                            other.addSpeed(new Point3D(player.getSpeed().getX()/-4, 0, 0));
+                            other.xBounce();
                         }
-                        //COLLISIONS WITH ENEMIES
-                        else if (other instanceof Circle || other instanceof Triangle){
-                            //if the player hits behind or opposite to the enemy's direction of motion
-                            if (other instanceof Circle){
-                                if (player.getX() > other.getX() && other.getSpeed().getX() < 0 || player.getX() < other.getX() && other.getSpeed().getX() > 0) {
-                                    //GAINS A FOURTH OF PLAYERS SPEED
-                                    other.addSpeed(new Point3D(player.getSpeed().getX()/4, 0, 0));
-                                } else {
-                                    //LOSES A FOURTH OF ITS SPEED
-                                    other.addSpeed(new Point3D(player.getSpeed().getX()/-4, 0, 0));
-                                    other.xBounce();
-                                }
 
-                                if (player.getY() > other.getY() + other.getHeight() / 2 && other.getSpeed().getY() < 0 || player.getY() < other.getY() && other.getSpeed().getY() > 0) {
-                                    //GAINS A FOURTH OF PLAYERS SPEED
-                                    other.addSpeed(new Point3D(0, player.getSpeed().getY()/4,0));
-                                } else {
-                                    //LOSES A FOURTH OF ITS SPEED
-                                    other.addSpeed(new Point3D(0, player.getSpeed().getY()/-4, 0));
-                                    other.yBounce();
-                                }
-                            }
-                            player.loseHealth();
-                        }
-                        else if(other instanceof Torpedo){
-                            if (player.getShieldHealth() < 5){
-                                player.loseHealth(15);
-                            }
-                            entities.remove(j);
-                            j--;
+                        if (player.getY() > other.getY() + other.getHeight() / 2 && other.getSpeed().getY() < 0 || player.getY() < other.getY() && other.getSpeed().getY() > 0) {
+                            //GAINS A FOURTH OF PLAYERS SPEED
+                            other.addSpeed(new Point3D(0, player.getSpeed().getY()/4,0));
+                        } else {
+                            //LOSES A FOURTH OF ITS SPEED
+                            other.addSpeed(new Point3D(0, player.getSpeed().getY()/-4, 0));
+                            other.yBounce();
                         }
                     }
+                    player.loseHealth();
                 }
-
-
+                else if(other instanceof Torpedo){
+                    if (player.getShieldHealth() < 5){
+                        player.loseHealth(15);
+                    }
+                    entities.remove(i);
+                    i--;
+                }
             }
+
+
         }
     }
 
@@ -190,7 +196,7 @@ public class Game extends JPanel implements ActionListener{
 
 
 
-        for( Entity obj : entities){
+        for(Entity obj : entities){
             obj.paint(g);
         }
     }

@@ -20,6 +20,8 @@ public class Torpedo extends Entity {
         g2d.setColor(getColor());
         g2d.rotate(angle, getX(), getY());
         g2d.fillRect(getX(), getY(), getWidth(), getHeight());
+        g2d.setColor(Color.cyan);
+        g2d.fillRect(getX()+getWidth(), getY(), getWidth()/4, getHeight());
         g2d.dispose();
     }
 
@@ -31,6 +33,7 @@ public class Torpedo extends Entity {
     public void move(){
         setX(getX()+(int)getSpeed().getX());
         setY(getY()+(int)getSpeed().getY());
+
     }
 
 

@@ -45,12 +45,28 @@ public abstract class Entity {
         if(nextTop <=0 || nextBottom > game.getHeight()) {
             yBounce();
         }
-        if (nextLeft <= 0 || nextRight > game.getWidth()) {
+        if (nextLeft <= 1 || nextRight > game.getWidth()) {
             xBounce();
         }
         x+=speed.getX();
         y+=speed.getY();
 
+
+    }
+
+    public Boolean checkOutBound(){
+        double nextLeft = x + speed.getX();
+        double nextRight = x + width + speed.getX();
+        double nextTop = y + speed.getY();
+        double nextBottom = y + height + speed.getY();
+
+        if(nextTop <=0 || nextBottom > game.getHeight()) {
+            return true;
+        }
+        if (nextLeft <= 0 || nextRight > game.getWidth()) {
+            return true;
+        }
+        return false;
     }
 
     //"SLOWING" OVER TIME 
@@ -65,17 +81,11 @@ public abstract class Entity {
     }
 
     public void yBounce(){
-        //SLOWS SPEED OVER TIME
-        if (speed.getY() > minSpeed){
-            speed.subtract(0, speed.getY()/16, 0);}
-            speed=new Point3D(speed.getX(), speed.getY()*-1, speed.getZ());
+        speed=new Point3D(speed.getX(), speed.getY()*-1.0, speed.getZ());
         updateVector();
     }
     public void xBounce(){
-        //SLOWS SPEED OVER TIME
-        if (speed.getX() > minSpeed){
-            speed.subtract(speed.getX()/16, 0, 0);}
-            speed = new Point3D(speed.getX()*-1, speed.getY(), speed.getZ());
+        speed = new Point3D(speed.getX()*-1.0, speed.getY(), speed.getZ());
         updateVector();
     }
 
