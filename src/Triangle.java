@@ -6,6 +6,7 @@ import java.awt.geom.AffineTransform;
  */
 public class Triangle extends Entity {
 
+    double angle;
 
     public Triangle(Color color,  int x, int y, int base, int height, double minSpeed, double maxSpeed, Game game){
         super(color, x, y, base, height, minSpeed, maxSpeed, game);
@@ -26,9 +27,18 @@ public class Triangle extends Entity {
         int nPoints = 3;
 
         g.fillPolygon(xPoints, yPoints, nPoints);
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.rotate(angle, getX()+getWidth()/2, getY()+getHeight()/2);
+        updateAngle();
 
 
     }
+
+    public void updateAngle(){
+        int cX = (getGame().getPositionX()+getGame().getPlayerDiameter()/2)-(getX()+getWidth()/2);
+        int cY = (getGame().getPositionY()+getGame().getPlayerDiameter()/2)-(getY()+getHeight()/2);
+
+        angle = Math.atan2((double)cY, (double)cX);}
 
 
     //TRACKING ENEMY
