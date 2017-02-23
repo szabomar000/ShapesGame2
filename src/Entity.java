@@ -118,10 +118,10 @@ public abstract class Entity {
     }
 
     public void gainHealth(){
-        if (health+4 > 125){
+        if (health+5 > 125){
             health = 125;
         }
-        else{health+=4;}
+        else{health+=5;}
     }
 
     public void gainHealth(int dh){

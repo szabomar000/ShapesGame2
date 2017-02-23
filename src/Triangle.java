@@ -7,10 +7,10 @@ import java.awt.geom.AffineTransform;
 public class Triangle extends Entity {
 
 
-    public Triangle(Color color,  int x, int y, int base, int height, double minSpeed, double maxSpeed, Entity player, Game game){
+    public Triangle(Color color,  int x, int y, int base, int height, double minSpeed, double maxSpeed, Game game){
         super(color, x, y, base, height, minSpeed, maxSpeed, game);
         createSpeed();
-        track(player);
+        track(game.getEntities().get(0));
 
     }
 
@@ -32,8 +32,8 @@ public class Triangle extends Entity {
 
 
     //TRACKING ENEMY
-    public static Triangle tracking(int base, int height, Entity player, Game game){
+    public static Triangle tracking(Game game){
         Point point = game.randomPosition();
-        return new Triangle(Color.yellow, (int) point.getX(),(int) point.getY(), 20, 30, 1.5, 2.2, player, game);
+        return new Triangle(Color.yellow, (int) point.getX(),(int) point.getY(), 20, 30, 1.5, 2.2, game);
     }
 }

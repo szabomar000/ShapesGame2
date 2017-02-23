@@ -13,7 +13,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 
     Timer timer;
     private int positionX, positionY, playerDiameter;
-    int level = 0;
+    int level = 1;
 
     ArrayList<Entity> entities;
 
@@ -104,7 +104,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
             }
             if (!foodleft) {
                 //Delay before adding new enemies
-                if (count == 60) {
+                if (count == 80) {
                     level++;
                     count = 0;
                     levels();
@@ -127,31 +127,56 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 
     //CALL LEVELS WHENEVER THE LEVEL IS OVER
     public void levels(){
+        //removes all entities
+        for(int i = 1; i < entities.size(); i++){
+            ArrayList<Entity> entCopy = new ArrayList<Entity>(entities);
+            if (entities.get(i) instanceof Turret || entities.get(i) instanceof Triangle){}
+            else entities.remove(i);
+            Entity ent = entCopy.get(i);
 
-        //10 FOOD every level
-        for (int i = 0; i < 10; i++) {
-            entities.add(Food.normalFood(getHeight(), getWidth(), this));
+            if (ent instanceof Circle && ent.getColor().equals(new Color(255,130,0))){
+                entities.add(Circle.fatCircle(this));
+            }
+            else if (ent instanceof Circle){
+                entities.add(Circle.fastCircle(this));
+            }
 
+            //entities.add(entCopy.get(i));
         }
 
+        //5 FOOD every level
+        for (int i = 0; i < 5; i++) {
+            entities.add(Food.normalFood(getHeight(), getWidth(), this));}
 
-        //4 FAT CIRCLE
+        //4 FAT CIRCLES
         if (level == 1) {
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 4; i++) {
                 entities.add(Circle.fatCircle(this));
             }
         }
-        //5 FAT CIRCLE
-        if (level == 2){
-            entities.add(Circle.fatCircle(this));
-            entities.add(Triangle.tracking(getWidth(), getHeight(), entities.get(0), this));
 
-            for (int i = 0; i < 2; i++) {
-                entities.add(Circle.fastCircle(this));
-            }
-        }
-        if (level == 3){
+        if (level == 2){
+            entities.add(Circle.fastCircle(this));
+        }//every 2 levels
+
+        if(level == 3){
+            entities.add(Triangle.tracking(this));
             entities.add(Turret.makeTurret(this));
+        }//lvl 3 only
+
+        if(level > 2){
+            entities.add(Circle.fastCircle(this));
+        }
+
+        if(level > 3){
+            entities.add(Turret.makeTurret(this));
+        }
+
+
+
+        if (level == 21) {
+            //game win
+
         }
     }
 
@@ -229,8 +254,9 @@ public class Game extends JPanel implements ActionListener, KeyListener{
         if(Stats.isGame()){
             //PRINTS THE LEVEL
             g.setFont(new Font("Times New Roman", Font.BOLD, 20));
-            printSimpleString("Level: " + level, 100, 0, 50, g);
-
+            g.setColor(Color.lightGray);
+            printSimpleString("Level: " + level, 100, 0, 52, g);
+            printSimpleString("Press P to Pause", 0, getWidth()/2, 25, g);
 
             for (Entity obj : entities) {
                 obj.paint(g);
