@@ -48,15 +48,11 @@ public class Game extends JPanel implements ActionListener, KeyListener{
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
 
-
-                timer.setDelay(1000/20);
-
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
-                timer.setDelay(1000/60);
             }
         });
 
