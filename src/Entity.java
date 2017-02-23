@@ -96,11 +96,13 @@ public abstract class Entity {
 
     //PLAYER'S MOVE METHOD
     public void playerMove(){
-        speed = new Point3D(Math.abs(pastX-game.getPositionX()), Math.abs(pastY-game.getPositionY()), 0);
-        setX(game.getPositionX());
-        setY(game.getPositionY());
-        pastX = game.getPositionX();
-        pastY = game.getPositionY();
+        int currentX = game.getPositionX()-getWidth()*8/10;
+        int currentY = game.getPositionY()-getHeight()/2;
+        speed = new Point3D(Math.abs(pastX -currentX), Math.abs(pastY-currentY), 0);
+        setX(currentX);
+        setY(currentY);
+        pastX = currentX;
+        pastY = currentY;
 
     }
 

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Created by hiltjar000 on 2/7/2017.
  */
-public class Game extends JPanel implements ActionListener{
+public class Game extends JPanel implements ActionListener, KeyListener{
 
     Timer timer;
     private int positionX, positionY, playerDiameter;
@@ -33,23 +33,34 @@ public class Game extends JPanel implements ActionListener{
          */
 
         frame.add(this);
-
+        frame.addKeyListener(this);
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent e){
                 super.mouseMoved(e);
+
                 positionX = e.getX();
                 positionY = e.getY();
             }
         });
-
         addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+
+
+                timer.setDelay(1000/20);
+
+            }
+
             @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
-                setCursor(getToolkit().createCustomCursor(new BufferedImage(3,3, BufferedImage.TYPE_INT_ARGB), new Point(0,0), null));
+                timer.setDelay(1000/60);
             }
         });
+
+
         frame.pack();
         frame.setLocationRelativeTo(null);
 
@@ -59,33 +70,51 @@ public class Game extends JPanel implements ActionListener{
     int count = 0;
     @Override
     public void actionPerformed(ActionEvent e){
-        boolean foodleft = false;
-        collision();
-        entities.get(0).playerMove();
-        for (int i = 1; i < entities.size(); i++){
-            if (entities.get(i) instanceof Food){
-                foodleft = true;
-            }
-            if (entities.get(i) instanceof Triangle){
-                entities.get(i).track(entities.get(0));
-            }
-            if(entities.get(i)instanceof Torpedo){
-                System.out.println(entities.get(i));
-                if(entities.get(i).checkOutBound()){
-                    entities.remove(i);
-                    i--;
-                }
+        if (Stats.isSpacePressed()){
+            Stats.setMenu(false);
+            Stats.setPause(false);
+            Stats.setGame(true);
+            setCursor(getToolkit().createCustomCursor(new BufferedImage(3, 3, BufferedImage.TYPE_INT_ARGB), new Point(0, 0), null));
+        }
+        if (Stats.ispPressed()){
+            Stats.setPause(true);
+            Stats.setGame(false);
+            setCursor(Cursor.getDefaultCursor());
+        }
 
+
+
+
+        if (Stats.isGame()) {
+            boolean foodleft = false;
+            collision();
+            entities.get(0).playerMove();
+            for (int i = 1; i < entities.size(); i++) {
+                if (entities.get(i) instanceof Food) {
+                    foodleft = true;
+                }
+                if (entities.get(i) instanceof Triangle) {
+                    entities.get(i).track(entities.get(0));
+                }
+                if (entities.get(i) instanceof Torpedo) {
+
+                    if (entities.get(i).checkOutBound()) {
+                        entities.remove(i);
+                        i--;
+                    }
+
+                }
+                entities.get(i).move();
             }
-            entities.get(i).move();
-        }
-        if (!foodleft){
-            count++;
-        }
-        if(count == 40){
-            level++;
-            count = 0;
-            levels();
+            if (!foodleft) {
+                //Delay before adding new enemies
+                if (count == 60) {
+                    level++;
+                    count = 0;
+                    levels();
+                }
+                else{count++;}
+            }
         }
         repaint();
     }
@@ -190,14 +219,26 @@ public class Game extends JPanel implements ActionListener{
     public void paint(Graphics g){
         super.paint(g);
 
-        //PRINTS THE LEVEL
-        g.setFont(new Font("Times New Roman", Font.BOLD, 20));
-        printSimpleString("Level: " + level, 100, 0, 50, g);
+
+        if (Stats.isMenu()){
+            setFont(new Font("Times New Roman", Font.BOLD, 32));
+            g.setColor(Color.white);
+            printSimpleString("Press Space to Play", 0, getWidth()/2, getHeight()/2, g);
+        }
+        if (Stats.isPause()){
+            setFont(new Font("Times New Roman", Font.BOLD, 32));
+            g.setColor(Color.white);
+            printSimpleString("Press Space to Continue", 0, getWidth()/2, getHeight()/2, g);
+        }
+        if(Stats.isGame()){
+            //PRINTS THE LEVEL
+            g.setFont(new Font("Times New Roman", Font.BOLD, 20));
+            printSimpleString("Level: " + level, 100, 0, 50, g);
 
 
-
-        for(Entity obj : entities){
-            obj.paint(g);
+            for (Entity obj : entities) {
+                obj.paint(g);
+            }
         }
     }
     public static void main(String[] args){
@@ -241,5 +282,21 @@ public class Game extends JPanel implements ActionListener{
 
     public ArrayList<Entity> getEntities() {
         return entities;
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {}
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_SPACE){Stats.setSpacePressed(true);}
+        if(e.getKeyCode() == KeyEvent.VK_P){Stats.setpPressed(true);}
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_SPACE){Stats.setSpacePressed(false);}
+        if(e.getKeyCode() == KeyEvent.VK_P){Stats.setpPressed(false);}
     }
 }

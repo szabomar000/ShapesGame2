@@ -56,8 +56,6 @@ public class Turret extends Entity implements ActionListener{
     }
 
     public void actionPerformed(ActionEvent e) {
-        //Torpedo.torp(getGame());
-        System.out.println("I FIRE TORPEDO");
         getGame().getEntities().add(Torpedo.torp(getX()+getWidth()/2, getY()+getHeight()/2, angle, getGame()));
     }
 
