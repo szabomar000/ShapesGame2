@@ -24,7 +24,8 @@ public class Game extends JPanel implements ActionListener, KeyListener{
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setTitle("SHAPES");
-        setPreferredSize(new Dimension(600,800));
+        frame.setResizable(false);
+        setPreferredSize(new Dimension(700,800));
         setBackground(Color.black);
 
         /*
@@ -176,7 +177,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 
 
         if (level == 21) {
-            //game win
+            win();
 
         }
     }
@@ -280,7 +281,12 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 
     //WHEN THE PLAYER LOSES THE GAME (HEALTH = 0)
     public void lose(){
-        JOptionPane.showMessageDialog(null, "You Lose.");
+        JOptionPane.showMessageDialog(null, "You Lost :(");
+        System.exit(0);
+    }
+
+    public void win(){
+        JOptionPane.showMessageDialog(null, "You Won!");
         System.exit(0);
     }
 
