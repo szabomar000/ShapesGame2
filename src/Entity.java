@@ -138,6 +138,7 @@ public abstract class Entity {
             health-=3;
         } else {
             health=0;
+            shieldHealth = 0;
             game.repaint();
             game.lose();
         }
@@ -149,6 +150,7 @@ public abstract class Entity {
             health-=dh;
         } else {
             health = 0;
+            shieldHealth = 0;
             game.repaint();
             game.lose();
         }
