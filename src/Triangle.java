@@ -25,22 +25,9 @@ public class Triangle extends Entity {
         int xPoints[] = {getX()+getWidth()/2, getX(), getX()+getWidth()};
         int yPoints[] = {getY(), getY()+getWidth(), getY()+getWidth()};
         int nPoints = 3;
-
         g.fillPolygon(xPoints, yPoints, nPoints);
-        Graphics2D g2d = (Graphics2D) g.create();
-        g2d.rotate(angle, getX()+getWidth()/2, getY()+getHeight()/2);
-        updateAngle();
-
 
     }
-
-    public void updateAngle(){
-        int cX = (getGame().getPositionX()+getGame().getPlayerDiameter()/2)-(getX()+getWidth()/2);
-        int cY = (getGame().getPositionY()+getGame().getPlayerDiameter()/2)-(getY()+getHeight()/2);
-
-        angle = Math.atan2((double)cY, (double)cX);}
-
-
     //TRACKING ENEMY
     public static Triangle tracking(Game game){
         Point point = game.randomPosition();
