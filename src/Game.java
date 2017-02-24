@@ -13,7 +13,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 
     Timer timer;
     private int positionX, positionY, playerDiameter;
-    int level = 3;
+    int level = 1;
 
     ArrayList<Entity> entities;
 
