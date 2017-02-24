@@ -14,6 +14,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
     Timer timer;
     private int positionX, positionY, playerDiameter;
     int level = 1;
+    int TXT_SIZE = 32;
 
     ArrayList<Entity> entities;
 
@@ -242,12 +243,20 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 
 
         if (Stats.isMenu()){
-            setFont(new Font("Times New Roman", Font.BOLD, 32));
+            g.setFont(new Font("Times New Roman", Font.BOLD, TXT_SIZE*3/4));
+            g.setColor(Color.green);
+            printSimpleString("Collect the food! ", 0, getWidth()/2, getHeight()/2 + TXT_SIZE*2, g);
+            g.setColor(Color.red);
+            printSimpleString("Avoid the enemies! ", 0, getWidth()/2, getHeight()/2 +TXT_SIZE*3, g);
+            g.setColor(Color.cyan);
+            printSimpleString("Your shield protects you from torpedoes!", 0, getWidth()/2, getHeight()/2 + TXT_SIZE*4, g);
+            printSimpleString("(Launched by turrets)", 0, getWidth()/2, getHeight()/2 + TXT_SIZE*5, g);
+            g.setFont(new Font("Times New Roman", Font.BOLD, TXT_SIZE));
             g.setColor(Color.white);
             printSimpleString("Press Space to Play", 0, getWidth()/2, getHeight()/2, g);
         }
         if (Stats.isPause()){
-            setFont(new Font("Times New Roman", Font.BOLD, 32));
+            setFont(new Font("Times New Roman", Font.BOLD, TXT_SIZE));
             g.setColor(Color.white);
             printSimpleString("Press Space to Continue", 0, getWidth()/2, getHeight()/2, g);
         }
