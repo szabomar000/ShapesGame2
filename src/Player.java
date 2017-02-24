@@ -30,7 +30,7 @@ public class Player extends Circle implements ActionListener{
 
         //SHIELD AROUND HEALTH BAR
         g.setColor(Color.BLUE);
-        for (int i = 0; i < shieldHealth/4; i++){
+        for (int i = 0; i < shieldHealth*2/9; i++){
             g.drawRect(10-(i+1), 10-(i+1), health+2*(i+1),20+2*(i+1) );
         }
 

@@ -132,11 +132,13 @@ public abstract class Entity {
     }
 
     public void loseHealth() {
-        if (shieldHealth > 0) {
+        if (shieldHealth - 1> 0) {
             shieldHealth-=1;
-        } else if (health > 1) {
+        } else if (health-3> 0) {
             health-=3;
         } else {
+            health=0;
+            game.repaint();
             game.lose();
         }
     }
@@ -146,6 +148,8 @@ public abstract class Entity {
         } else if (health-dh > 0) {
             health-=dh;
         } else {
+            health = 0;
+            game.repaint();
             game.lose();
         }
     }
